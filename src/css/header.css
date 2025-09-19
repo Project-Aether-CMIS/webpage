@@ -1,0 +1,66 @@
+header.header{
+    background-color: black;
+    display: flex;
+}
+a.logo_text{
+    color: white;
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-family: "Astroz", sans-serif;
+    text-decoration: none;
+}
+h1.slogan{
+    color: white;
+    font-size: 15px;
+    font-weight: lighter;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    font-family: "Avenir LT Pro", sans-serif;
+}
+div.branding{
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start;
+}
+
+nav.nav{
+    margin: auto;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+a.nav_link{
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-family: "Avenir LT Pro", sans-serif;
+    text-decoration: underline 0.15em rgba(0,0,0,0);
+    transition: text-decoration-color 0.3s;
+}
+
+a.nav_link:hover{
+    text-decoration-color: white;
+    
+}
+
+body{
+    display: none;
+}
+
+@font-face {
+    font-family: "Astroz";
+    src: url(res/font/astroz.TTF);
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Avenir LT Pro";
+    src:url(res/font/AVENIRLTPROLIGHT.OTF);
+    font-weight: normal;
+    font-style: normal;
+}
