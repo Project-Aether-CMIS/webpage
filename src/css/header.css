@@ -26,6 +26,14 @@ div.branding{
     align-items: flex-start;
 }
 
+img.logo{
+    height: 50px;
+    width: 50px;
+    margin-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
 nav.nav{
     margin: auto;
     vertical-align: middle;
@@ -39,16 +47,55 @@ a.nav_link{
     margin-right: 20px;
     font-family: "Avenir LT Pro", sans-serif;
     text-decoration: underline 0.15em rgba(0,0,0,0);
-    transition: text-decoration-color 0.3s;
+    transition: text-decoration-color 0.5s, font-size 0.5s;
 }
 
 a.nav_link:hover{
     text-decoration-color: white;
-    
+    font-size: 25px;
 }
 
 body{
     display: none;
+}
+
+div.banner{
+    height: 500px;
+    overflow: hidden;
+    position: relative;
+}
+div.banner:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    opacity: 0.5;
+    background-image: url(../../res/image/placeholder.webp);
+}
+h1.banner_title{
+    color: white;
+    font-size: 48px;
+    font-family: "Astroz", sans-serif;
+    position: relative;
+    top:10px;
+    left: 10px;
+    margin: 0;
+    padding: 20px;
+}
+
+h2.banner_content{
+    color: white;
+    font-size: 18px;
+    font-family: "Avenir LT Pro", sans-serif;
+    position: relative;
+    top:10px;
+    left: 10px;
+    margin: 0;
+    padding: 20px;
+    max-width: 800px;
 }
 
 @font-face {
