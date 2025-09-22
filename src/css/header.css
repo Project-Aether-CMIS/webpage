@@ -57,57 +57,39 @@ a.nav_link:hover{
 
 body{
     display: none;
-}
-
-div.banner{
-    height: 500px;
-    overflow: hidden;
-    position: relative;
-}
-div.banner:before{
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: -1;
-    opacity: 0.5;
-    background-image: url(../../res/image/placeholder.webp);
-}
-h1.banner_title{
-    color: white;
-    font-size: 48px;
-    font-family: "Astroz", sans-serif;
-    position: relative;
-    top:10px;
-    left: 10px;
+    padding: 0;
     margin: 0;
-    padding: 20px;
 }
 
-h2.banner_content{
+footer.footer{
+    color: black;
+    display: flex;
+}
+
+div.footer_content{
+    text-align: left;
+}
+p.copyright_text{
     color: white;
-    font-size: 18px;
+    text-align: left;
+    font-size: 14px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
     font-family: "Avenir LT Pro", sans-serif;
-    position: relative;
-    top:10px;
-    left: 10px;
-    margin: 0;
-    padding: 20px;
-    max-width: 800px;
 }
 
 @font-face {
     font-family: "Astroz";
-    src: url(res/font/astroz.TTF);
+    src: url(../../res/font/astroz.TTF);
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: "Avenir LT Pro";
-    src:url(res/font/AVENIRLTPROLIGHT.OTF);
+    src:url(../../res/font/AVENIRLTPROLIGHT.OTF);
     font-weight: normal;
     font-style: normal;
 }
