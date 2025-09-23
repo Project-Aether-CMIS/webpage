@@ -79,6 +79,16 @@ p.copyright_text{
     margin-left: 20px;
     font-family: "Avenir LT Pro", sans-serif;
 }
+p.copyright_disclaimer{
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    font-family: "Avenir LT Pro", sans-serif;
+}
 
 @font-face {
     font-family: "Astroz";
