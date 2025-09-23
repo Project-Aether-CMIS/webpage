@@ -1,4 +1,3 @@
-///<reference path="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"/>
 const swiper = new Swiper('.swiper', {
     direction: 'horizontal',
     loop: true,
