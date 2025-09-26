@@ -1,0 +1,31 @@
+h1.page_title {
+    color: white;
+    font-size: 48px;
+    font-family: "Astroz", sans-serif;
+    margin: 40px;
+    text-align: center;
+}
+div.resources_display{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+a.github_link{
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+h2.github_card_title{
+    color: white;
+    font-size: 24px;
+    font-family: "Avenir LT Pro", sans-serif;
+    margin: 20px;
+    text-decoration: none;
+}
+img.github_logo{
+    height: 50px;
+    width: auto;
+    margin: 20px;
+}
