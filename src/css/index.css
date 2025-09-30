@@ -67,6 +67,46 @@ h2.content1_subtitle{
     padding: 20px;
 }
 
+div.developer{
+    height: 400px;
+    position: relative;
+    width: 100vw;
+    top: 0;
+    text-align: center;
+}
+
+h1.developer_title{
+    color: white;
+    font-size: 36px;
+    font-family: "Avenir LT Pro", sans-serif;
+    position: relative;
+    top: 20px;
+    padding: 20px;
+}
+
+h2.developer_subtitle{
+    color: white;
+    font-size: 24px;
+    font-family: "Avenir LT Pro", sans-serif;
+    padding: 20px;
+}
+
+button.developer_button{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    font-size: 20px;
+    font-family: "Avenir LT Pro", sans-serif;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, text-color 0.3s;
+}
+
+button.developer_button:hover{
+    background-color: white;
+    color: black;
+}
 
 :root{
     --swiper-navigation-color: white;

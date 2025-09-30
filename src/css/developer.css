@@ -1,0 +1,10 @@
+div.content_after{
+    display: none;
+}
+
+div.login{
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+}
