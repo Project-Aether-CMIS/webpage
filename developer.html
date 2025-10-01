@@ -14,6 +14,7 @@
         <script src="https://code.jquery.com/jquery-3.7.1.js"
             integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
         <script src="src/js/fadein.js" defer></script>
+        <script src="src/js/developer.js" defer></script>
 </head>
 
 <body bgcolor="black">
@@ -43,9 +44,9 @@
                 <h1 class="slogan">Sic Itur Ad Astra</h1>
             </div>
         </div>
-        <form class="password_form" action="https://aether-backend.sfever.workers.dev/auth" method="post">
+        <form class="password_form" method="post" novalidate>
             <input type="password" name="password" placeholder="Enter your password" required class="password_input">
-            <button type="submit" class="password_button">Login</button>
+            <button type="submit" class="password_button" formaction="">Login</button>
         </form>
     </div>
 
