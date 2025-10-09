@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     form.on('submit', async function (event) {
         const value = input.val().trim();
-
+        event.preventDefault();
         if (!value) {
             event.preventDefault();
             showRequired();
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
             showWrong();
         } catch (error) {
             console.error('Authentication request failed:', error);
-            event.preventDefault();
+            
             showWrong();
         }
     });
