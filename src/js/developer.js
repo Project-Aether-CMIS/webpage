@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = $('.password_form');
     const input = $('.password_input');
+    $('.content_after').hide();
+    $('.login').show();
     if (!form.length || !input.length) return;
 
     if (!input.parent().hasClass('password_field')) {
@@ -47,7 +49,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
             if (response.ok) {
                 hideAllTips();
-                $('.content_after').fadeIn();
+                $('.content_after').fadeIn({
+                    duration: 200,
+                    start: function () {
+                        $(this).css('display', 'flex');
+                    }
+                });
+                $('.login').fadeOut(200);
                 return;
             }
 
