@@ -112,3 +112,103 @@ input.password_input{
     background: rgba(255, 77, 79, 0.95);
     border-color: rgba(255, 77, 79, 0.4);
 }
+
+h1.page_title{
+    color: white;
+    font-size: 36px;
+    font-family: "Avenir LT Pro", sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+h2.warning_text{
+    color:red;
+    text-align: center;
+    font-size: 20px;
+    font-family: "Avenir LT Pro", sans-serif;
+    margin:10px;
+    padding: 0;
+}
+
+div.file_list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+div.file_item{
+    display: flex;
+    flex-direction: row;
+}
+
+h2.file_name{
+    color: white;
+    font-size: 18px;
+    font-family: "Avenir LT Pro", sans-serif;
+    margin: 10px;
+    padding: 10px;
+}
+
+button.download_button{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    font-size: 16px;
+    font-family: "Avenir LT Pro", sans-serif;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, text-color 0.3s;
+    margin: 10px;
+}
+
+button.download_button:hover{
+    background-color: white;
+    color: black;
+}
+
+button.delete_button{
+    background-color: black;
+    border: 2px solid red;
+    color: red;
+    font-size: 16px;
+    font-family: "Avenir LT Pro", sans-serif;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, text-color 0.3s;
+    margin: 10px;
+}
+
+button.delete_button:hover{
+    background-color: red;
+    color: white;
+}
+
+button.upload_button{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    font-size: 20px;
+    font-family: "Avenir LT Pro", sans-serif;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, text-color 0.3s;
+    margin: 15px;
+    justify-self: center;
+}
+
+button.upload_button:hover{
+    background-color: white;
+    color: black;
+}
+
+div.documentation{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
