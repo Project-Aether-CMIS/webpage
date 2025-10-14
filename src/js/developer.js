@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+function passwordHandler() {
     const form = $('.password_form');
     const input = $('.password_input');
     $('.content_after').hide();
@@ -73,4 +73,10 @@ document.addEventListener("DOMContentLoaded", function() {
             hideAllTips();
         }
     });
-});
+}
+
+function fileUploadHandler() {
+    
+}
+
+document.addEventListener("DOMContentLoaded", passwordHandler);
