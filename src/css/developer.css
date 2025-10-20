@@ -270,3 +270,12 @@ form.upload_form{
     align-items: center;
     vertical-align: middle;
 }
+
+p.no-files{
+    color: white;
+    font-size: 20px;
+    font-family: "Avenir LT Pro", sans-serif;
+    margin: 20px;
+    padding: 0;
+    text-align: center;
+}

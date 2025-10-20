@@ -56,6 +56,7 @@ function passwordHandler() {
                     }
                 });
                 $('.login').fadeOut(200);
+                updateFileList();
                 return;
             }
 
@@ -63,7 +64,7 @@ function passwordHandler() {
             showWrong();
         } catch (error) {
             console.error('Authentication request failed:', error);
-            
+
             showWrong();
         }
     });
@@ -76,18 +77,18 @@ function passwordHandler() {
 }
 
 function fileUploadHandler() {
-    const fileform=$('.upload_form');
-    const fileinput=$('.file_input');
-    const file_name_display=$('.uploaded_file_name');
+    const fileform = $('.upload_form');
+    const fileinput = $('.file_input');
+    const file_name_display = $('.uploaded_file_name');
     const allowedTypes = ['text/markdown', 'text/plain', '.md'];
-    fileinput.on('change', function() {
-        if(this.files.length>1){
+    fileinput.on('change', function () {
+        if (this.files.length > 1) {
             alert('Please select only one file.');
             this.value = ''; // Clear the input
             file_name_display.text('No file chosen');
             return;
         }
-        else if(this.files.length===0){
+        else if (this.files.length === 0) {
             file_name_display.text('No file chosen');
             return;
         }
@@ -100,13 +101,13 @@ function fileUploadHandler() {
         file_name_display.text(fileName);
     });
 
-    fileform.on('submit', async function(event) {
+    fileform.on('submit', async function (event) {
         event.preventDefault();
         if (!fileinput.val()) {
             alert('Please select a file to upload.');
             return;
         }
-        try{
+        try {
             const response = await fetch('https://aether-backend.sfever.workers.dev/upload', {
                 method: 'POST',
                 body: new FormData(this)
@@ -115,14 +116,58 @@ function fileUploadHandler() {
                 alert('File uploaded successfully.');
                 fileinput.val('');
                 file_name_display.text('No file chosen');
-                return;
             }
-            alert('File upload failed. Please try again.');
+            else{
+                alert('File upload failed. Please try again.');
+            }
         } catch (error) {
             console.error('File upload request failed:', error);
-            alert('File upload failed due ',error,'. Please try again.');
-            return
+            alert('File upload failed due to an error. Please try again.');
         }
+        finally{
+            updateFileList();
+            return;
+        }
+    });
+}
+
+async function updateFileList() {
+    const file_list_container = $('.file_list');
+    let fileList = [];
+    try {
+        const response = await fetch('https://aether-backend.sfever.workers.dev/list', {
+            method: 'GET'
+        });
+        fileList = await response.json();
+    } catch (error) {
+        console.error('Failed to fetch file list:', error);
+        file_list_container.html('<p class="no-files">Error loading file list.</p>');
+        return;
+
+    }
+    if (!fileList.length) {
+        file_list_container.html('<p class="no-files">No files uploaded yet.</p>');
+        return;
+    }
+    file_list_container.html('');
+    fileList.forEach(file => {
+        file_list_container.append(`<div class="file_item">
+                <h2 class="file_name">${file.name}</h2>
+                <button class="download_button" onclick="downloadFile('${file.name}')">Download</button>
+                <button class="delete_button" onclick="deleteFile('${file.name}')">Delete</button>
+            </div>`);
+    });
+}
+
+function downloadFile(fileName) {
+    fetch(`https://aether-backend.sfever.workers.dev/download/${encodeURIComponent(fileName)}`, {
+        method: 'GET'
+    });
+}
+
+function deleteFile(fileName) {
+    fetch(`https://aether-backend.sfever.workers.dev/files/${encodeURIComponent(fileName)}`, {
+        method: 'DELETE'
     });
 }
 
