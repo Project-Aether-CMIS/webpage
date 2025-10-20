@@ -28,7 +28,8 @@
         <h2 class="warning_text">Unauthorized access come with consequences.</h2>
         <div class="documentation">
             <form class="upload_form" method="post" enctype="multipart/form-data" novalidate>
-                <input type="file" name="file" required class="file_input">
+                <input type="file" id="doc-file" name="file" required class="file_input" accept=".md,text/markdown">
+                <label for="doc-file" class="file_input_button">Choose file</label>
                 <p class="uploaded_file_name">No file chosen</p>
                 <button type="submit" class="upload_button" formaction="">Upload</button>
             </form>

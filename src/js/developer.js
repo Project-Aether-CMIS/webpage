@@ -76,7 +76,57 @@ function passwordHandler() {
 }
 
 function fileUploadHandler() {
-    
+    const fileform=$('.upload_form');
+    const fileinput=$('.file_input');
+    const file_name_display=$('.uploaded_file_name');
+    const allowedTypes = ['text/markdown', 'text/plain', '.md'];
+    fileinput.on('change', function() {
+        if(this.files.length>1){
+            alert('Please select only one file.');
+            this.value = ''; // Clear the input
+            file_name_display.text('No file chosen');
+            return;
+        }
+        else if(this.files.length===0){
+            file_name_display.text('No file chosen');
+            return;
+        }
+        else if (!allowedTypes.includes(this.files[0].type) && !this.files[0].name.endsWith('.md')) {
+            alert('Invalid file type. Please select a Markdown (.md) file.');
+            this.value = '';
+            return;
+        }
+        const fileName = $(this).val().split('\\').pop();
+        file_name_display.text(fileName);
+    });
+
+    fileform.on('submit', async function(event) {
+        event.preventDefault();
+        if (!fileinput.val()) {
+            alert('Please select a file to upload.');
+            return;
+        }
+        try{
+            const response = await fetch('https://aether-backend.sfever.workers.dev/upload', {
+                method: 'POST',
+                body: new FormData(this)
+            });
+            if (response.ok) {
+                alert('File uploaded successfully.');
+                fileinput.val('');
+                file_name_display.text('No file chosen');
+                return;
+            }
+            alert('File upload failed. Please try again.');
+        } catch (error) {
+            console.error('File upload request failed:', error);
+            alert('File upload failed due ',error,'. Please try again.');
+            return
+        }
+    });
 }
 
-document.addEventListener("DOMContentLoaded", passwordHandler);
+document.addEventListener("DOMContentLoaded", () => {
+    passwordHandler();
+    fileUploadHandler();
+});
