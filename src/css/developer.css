@@ -88,6 +88,20 @@ input.password_input{
     margin: 15px;
 }
 
+input.author_input{
+    background-color: black;
+    border: 2px solid white;
+    color: white;
+    font-size: 18px;
+    font-family: "Avenir LT Pro", sans-serif;
+    border-radius: 20px;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 10px 15px 0;
+    text-align: center;
+}
+
 .password_error {
     position: absolute;
     left: 50%;
@@ -140,15 +154,40 @@ div.file_list{
 
 div.file_item{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 18px;
+    padding: 16px 24px;
+    margin: 12px 0;
+    width: 100%;
+    max-width: 600px;
+    box-sizing: border-box;
 }
 
 h2.file_name{
     color: white;
     font-size: 18px;
     font-family: "Avenir LT Pro", sans-serif;
-    margin: 10px;
-    padding: 10px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+p.file_author{
+    color: #cccccc;
+    font-size: 14px;
+    font-family: "Avenir LT Pro", sans-serif;
+    margin: 8px 0 16px;
+    text-align: center;
+}
+
+div.file_actions{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 button.download_button{
@@ -211,6 +250,10 @@ div.documentation{
     flex-direction: column;
     align-items: center;
     padding: 20px;
+}
+
+.author_input::placeholder{
+    color: rgba(255, 255, 255, 0.6);
 }
 
 input.file_input::file-selector-button{

@@ -30,14 +30,18 @@
             <form class="upload_form" method="post" enctype="multipart/form-data" novalidate>
                 <input type="file" id="doc-file" name="file" required class="file_input" accept=".md,text/markdown">
                 <label for="doc-file" class="file_input_button">Choose file</label>
+                <input type="text" name="author" class="author_input" placeholder="Author name (optional)">
                 <p class="uploaded_file_name">No file chosen</p>
                 <button type="submit" class="upload_button" formaction="">Upload</button>
             </form>
             <div class="file_list">
                 <div class="file_item">
                     <h2 class="file_name">example_file.txt</h2>
-                    <button class="download_button" onclick="">Download</button>
-                    <button class="delete_button" onclick="">Delete</button>
+                    <p class="file_author">Uploaded by Sample Author</p>
+                    <div class="file_actions">
+                        <button class="download_button" type="button">Download</button>
+                        <button class="delete_button" type="button">Delete</button>
+                    </div>
                 </div>
             </div>
 

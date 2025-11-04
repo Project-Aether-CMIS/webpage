@@ -34,8 +34,8 @@ div.product_info{
 }
 
 img.product_image{
-    mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent);
+    mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
+    -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 100%);
 
 }
 

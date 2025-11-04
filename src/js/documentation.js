@@ -9,9 +9,9 @@ async function updateDocumentationDisplay() {
     const documentationDisplay = $('.documentation_display');
 
     documentationDisplay.empty();
-    const docs=await fetch('https://aether-backend.sfever.workers.dev/list')
-    .then(response => response.json())
-    .catch(error => {
+    const docs = await fetch('https://aether-backend.sfever.workers.dev/list')
+        .then(response => response.json())
+        .catch(error => {
         console.error('Error fetching documentation:', error);
         return [];
     });
@@ -27,14 +27,37 @@ async function updateDocumentationDisplay() {
         }
     });
     sortedDocs.forEach(doc => {
-        const docItem = $(`
-            <div class="documentation_item">
-                <h1 class="documentation_title">${doc.title}</h1>
-                <p class="documentation_summary">${doc.summary}</p>
-                <p class="documentation_date">${new Date(doc.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-            </div>
-        `);
+        const docItem = $('<div class="documentation_item"></div>');
+        docItem.attr('data-title', doc.title);
+
+        $('<h1 class="documentation_title"></h1>').text(doc.title).appendTo(docItem);
+        $('<p class="documentation_summary"></p>').text(doc.summary || 'No summary available.').appendTo(docItem);
+
+        const meta = $('<div class="documentation_meta"></div>');
+        $('<span class="documentation_author"></span>')
+            .text(`Author: ${doc.author || 'Unknown Author'}`)
+            .appendTo(meta);
+        $('<span class="documentation_date"></span>')
+            .text(formatDocumentDate(doc.date))
+            .appendTo(meta);
+        meta.appendTo(docItem);
+
         documentationDisplay.append(docItem);
+    });
+}
+
+function formatDocumentDate(value) {
+    const date = value ? new Date(value) : null;
+    if (!date || Number.isNaN(date.getTime())) {
+        return 'Date unavailable';
+    }
+    return date.toLocaleString(undefined, {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
     });
 }
 

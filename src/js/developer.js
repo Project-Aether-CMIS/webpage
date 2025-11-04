@@ -1,3 +1,43 @@
+function getStoredAuthorPreference() {
+    try {
+        return localStorage.getItem('aetherDefaultAuthor') || '';
+    } catch (error) {
+        console.warn('Unable to access localStorage:', error);
+        return '';
+    }
+}
+
+function inferWindowsUsername() {
+    try {
+        const decodedPath = decodeURIComponent(window.location.pathname || '');
+        const match = decodedPath.match(/\/Users\/([^/]+)/i);
+        if (match && match[1]) {
+            return match[1];
+        }
+
+        const decodedHref = decodeURIComponent(window.location.href || '');
+        const hrefMatch = decodedHref.match(/Users\/([^/]+)/i);
+        if (hrefMatch && hrefMatch[1]) {
+            return hrefMatch[1];
+        }
+    } catch (error) {
+        console.warn('Unable to infer Windows username:', error);
+    }
+    return '';
+}
+
+function getDefaultAuthorName() {
+    return getStoredAuthorPreference() || inferWindowsUsername() || '';
+}
+
+function persistDefaultAuthor(author) {
+    try {
+        localStorage.setItem('aetherDefaultAuthor', author);
+    } catch (error) {
+        console.warn('Unable to persist default author:', error);
+    }
+}
+
 function passwordHandler() {
     const form = $('.password_form');
     const input = $('.password_input');
@@ -80,7 +120,16 @@ function fileUploadHandler() {
     const fileform = $('.upload_form');
     const fileinput = $('.file_input');
     const file_name_display = $('.uploaded_file_name');
+    const authorInput = $('.author_input');
     const allowedTypes = ['text/markdown', 'text/plain', '.md'];
+
+    if (authorInput.length) {
+        const defaultAuthor = getDefaultAuthorName();
+        if (defaultAuthor && !authorInput.val()) {
+            authorInput.val(defaultAuthor);
+        }
+    }
+
     fileinput.on('change', function () {
         if (this.files.length > 1) {
             alert('Please select only one file.');
@@ -107,10 +156,32 @@ function fileUploadHandler() {
             alert('Please select a file to upload.');
             return;
         }
+
+        let authorName = '';
+        if (authorInput.length) {
+            authorName = authorInput.val().trim();
+        }
+
+        if (!authorName) {
+            authorName = getDefaultAuthorName() || 'Unknown Author';
+            if (authorInput.length) {
+                authorInput.val(authorName);
+            }
+        }
+
+        if (authorName && authorName !== 'Unknown Author') {
+            persistDefaultAuthor(authorName);
+        }
+
+        const formData = new FormData(this);
+        if (authorInput.length) {
+            formData.set('author', authorName);
+        }
+
         try {
             const response = await fetch('https://aether-backend.sfever.workers.dev/upload', {
                 method: 'POST',
-                body: new FormData(this)
+                body: formData
             });
             if (response.ok) {
                 alert('File uploaded successfully.');
@@ -151,11 +222,23 @@ async function updateFileList() {
     }
     file_list_container.html('');
     fileList.forEach(file => {
-        file_list_container.append(`<div class="file_item">
-                <h2 class="file_name">${file.name}</h2>
-                <button class="download_button" onclick="downloadFile('${file.name}')">Download</button>
-                <button class="delete_button" onclick="deleteFile('${file.name}')">Delete</button>
-            </div>`);
+        const fileItem = $('<div class="file_item"></div>');
+
+        $('<h2 class="file_name"></h2>').text(file.name).appendTo(fileItem);
+        $('<p class="file_author"></p>').text(`Uploaded by ${file.author || 'Unknown Author'}`).appendTo(fileItem);
+
+        const actions = $('<div class="file_actions"></div>');
+        $('<button class="download_button">Download</button>')
+            .attr('type', 'button')
+            .on('click', () => downloadFile(file.name))
+            .appendTo(actions);
+        $('<button class="delete_button">Delete</button>')
+            .attr('type', 'button')
+            .on('click', () => deleteFile(file.name))
+            .appendTo(actions);
+
+        actions.appendTo(fileItem);
+        file_list_container.append(fileItem);
     });
 }
 

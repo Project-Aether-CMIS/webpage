@@ -47,6 +47,8 @@ div.documentation_item{
     margin: 20px;
     width: 100%;
     transition: transform 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 18px;
 }
 
 div.documentation_item:hover{
@@ -67,10 +69,31 @@ p.documentation_summary{
     margin-bottom: 10px;
 }
 
-p.documentation_date{
-    color: gray;
+.documentation_meta{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+p.documentation_author,
+p.documentation_date,
+.documentation_meta .documentation_author,
+.documentation_meta .documentation_date{
+    color: #bbbbbb;
     font-size: 16px;
     font-family: "Avenir LT Pro", sans-serif;
+}
+
+p.documentation_author,
+.documentation_meta .documentation_author{
+    text-align: left;
+}
+
+p.documentation_date,
+.documentation_meta .documentation_date{
     text-align: right;
 }
 
