@@ -1,0 +1,20 @@
+h1.title {
+    font-size: 36px;
+    font-family: 'Avenir LT Pro', sans-serif;
+    text-align: center;
+    color: white;
+}
+
+div.info {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    flex-direction: row;
+}
+div.info p {
+    font-family: 'Avenir LT Pro', sans-serif;
+    color: white;
+    font-size: 18px;
+    margin: 10px 5%;
+
+}

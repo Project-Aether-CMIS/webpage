@@ -55,15 +55,21 @@ a.nav_link:hover{
     font-size: 25px;
 }
 
+/* Global layout: sticky footer via flex column */
 body{
-    display: none;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     padding: 0;
     margin: 0;
+    opacity: 0; /* will be animated to 1 by JS */
 }
 
 footer.footer{
     color: black;
     display: flex;
+    margin-top: auto; /* push footer to bottom when content is short */
+    background-color: black;
 }
 
 div.footer_content{

@@ -2,7 +2,7 @@ div.banner{
     height: 800px;
     overflow: hidden;
     position: relative;
-    width: 100vw;
+    width: 100%;
 }
 img.banner_image{
     position: absolute;
@@ -42,7 +42,7 @@ h2.banner_content{
 div.content1{
     height: 800px;
     position: relative;
-    width: 100vw;
+    width: 100%;
     top: 0;
 }
 
@@ -70,7 +70,7 @@ h2.content1_subtitle{
 div.developer{
     height: 400px;
     position: relative;
-    width: 100vw;
+    width: 100%;
     top: 0;
     text-align: center;
 }
@@ -111,4 +111,10 @@ button.developer_button:hover{
 :root{
     --swiper-navigation-color: white;
     --swiper-navigation-size: 25px;
+}
+
+/* Ensure Swiper container never exceeds viewport width */
+.swiper{
+    width: 100%;
+    overflow: hidden;
 }
