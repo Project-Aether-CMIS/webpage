@@ -1,3 +1,21 @@
+// Unified error logging helper
+function logError(context, error, extra) {
+    try {
+        const payload = {
+            context,
+            message: error && error.message ? error.message : String(error),
+            stack: error && error.stack ? error.stack : undefined,
+            extra
+        };
+        // eslint-disable-next-line no-console
+        console.error('[Developer Portal]', payload);
+    } catch (e) {
+        // Fallback in case of logging failure
+        // eslint-disable-next-line no-console
+        console.error('[Developer Portal] Logging failure', e, context, error, extra);
+    }
+}
+
 function getStoredAuthorPreference() {
     try {
         return localStorage.getItem('aetherDefaultAuthor') || '';
@@ -99,11 +117,12 @@ function passwordHandler() {
                 updateFileList();
                 return;
             }
-
+            // Non-OK response (e.g., wrong password)
+            console.warn('Authentication failed:', { status: response.status, statusText: response.statusText });
             event.preventDefault();
             showWrong();
         } catch (error) {
-            console.error('Authentication request failed:', error);
+            logError('Authentication request failed', error);
 
             showWrong();
         }
@@ -189,10 +208,11 @@ function fileUploadHandler() {
                 file_name_display.text('No file chosen');
             }
             else{
+                console.error('Upload failed:', { status: response.status, statusText: response.statusText });
                 alert('File upload failed. Please try again.');
             }
         } catch (error) {
-            console.error('File upload request failed:', error);
+            logError('File upload request failed', error);
             alert('File upload failed due to an error. Please try again.');
         }
         finally{
@@ -209,9 +229,12 @@ async function updateFileList() {
         const response = await fetch('https://aether-backend.sfever.workers.dev/list', {
             method: 'GET'
         });
+        if (!response.ok) {
+            throw new Error(`List request failed: ${response.status} ${response.statusText}`);
+        }
         fileList = await response.json();
     } catch (error) {
-        console.error('Failed to fetch file list:', error);
+        logError('Failed to fetch file list', error);
         file_list_container.html('<p class="no-files">Error loading file list.</p>');
         return;
 
@@ -224,17 +247,17 @@ async function updateFileList() {
     fileList.forEach(file => {
         const fileItem = $('<div class="file_item"></div>');
 
-        $('<h2 class="file_name"></h2>').text(file.name).appendTo(fileItem);
+        $('<h2 class="file_name"></h2>').text(file.file_name).appendTo(fileItem);
         $('<p class="file_author"></p>').text(`Uploaded by ${file.author || 'Unknown Author'}`).appendTo(fileItem);
 
         const actions = $('<div class="file_actions"></div>');
         $('<button class="download_button">Download</button>')
             .attr('type', 'button')
-            .on('click', () => downloadFile(file.name))
+            .on('click', () => downloadFile(file.file_name))
             .appendTo(actions);
         $('<button class="delete_button">Delete</button>')
             .attr('type', 'button')
-            .on('click', () => deleteFile(file.name))
+            .on('click', () => deleteFile(file.file_name))
             .appendTo(actions);
 
         actions.appendTo(fileItem);
@@ -245,16 +268,54 @@ async function updateFileList() {
 function downloadFile(fileName) {
     fetch(`https://aether-backend.sfever.workers.dev/download/${encodeURIComponent(fileName)}`, {
         method: 'GET'
-    });
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Download failed: ${response.status} ${response.statusText}`);
+            }
+            // Let the browser handle the download by navigating to the URL if needed
+            return response.blob();
+        })
+        .then((blob) => {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        })
+        .catch((error) => logError('Download error', error, { fileName }));
 }
 
 function deleteFile(fileName) {
     fetch(`https://aether-backend.sfever.workers.dev/files/${encodeURIComponent(fileName)}`, {
         method: 'DELETE'
-    });
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Delete failed: ${response.status} ${response.statusText}`);
+            }
+            updateFileList();
+        })
+        .catch((error) => logError('Delete error', error, { fileName }));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     passwordHandler();
     fileUploadHandler();
+});
+
+// Global error logging
+window.addEventListener('error', (event) => {
+    logError('Uncaught error', event.error || event.message, {
+        filename: event.filename,
+        lineno: event.lineno,
+        colno: event.colno
+    });
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+    logError('Unhandled promise rejection', event.reason);
 });

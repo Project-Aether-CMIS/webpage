@@ -21,16 +21,19 @@ async function updateDocumentationDisplay() {
     }
     const sortedDocs = docs.sort((a, b) => {
         if (sorting === 'title') {
-            return order === 'asc' ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+            const nameA = formatDisplayTitle(a.file_name);
+            const nameB = formatDisplayTitle(b.file_name);
+            return order === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
         } else if (sorting === 'date') {
-            return order === 'asc' ? new Date(a.date) - new Date(b.date) : new Date(b.date) - new Date(a.date);
+            return order === 'asc' ? new Date(a.file_date) - new Date(b.file_date) : new Date(b.file_date) - new Date(a.file_date);
         }
     });
     sortedDocs.forEach(doc => {
-        const docItem = $('<div class="documentation_item"></div>');
-        docItem.attr('data-title', doc.title);
+        const docItem = $('<div class="documentation_item" href="/doc_view.html?file=' + encodeURIComponent(doc.file_name) + '"></div>');
+        const displayTitle = formatDisplayTitle(doc.file_name);
+        docItem.attr('data-title', displayTitle);
 
-        $('<h1 class="documentation_title"></h1>').text(doc.title).appendTo(docItem);
+        $('<h1 class="documentation_title"></h1>').text(displayTitle).appendTo(docItem);
         $('<p class="documentation_summary"></p>').text(doc.summary || 'No summary available.').appendTo(docItem);
 
         const meta = $('<div class="documentation_meta"></div>');
@@ -38,7 +41,7 @@ async function updateDocumentationDisplay() {
             .text(`Author: ${doc.author || 'Unknown Author'}`)
             .appendTo(meta);
         $('<span class="documentation_date"></span>')
-            .text(formatDocumentDate(doc.date))
+            .text(formatDocumentDate(doc.file_date))
             .appendTo(meta);
         meta.appendTo(docItem);
 
@@ -59,5 +62,16 @@ function formatDocumentDate(value) {
         minute: '2-digit',
         second: '2-digit'
     });
+}
+
+// Generate a display-friendly title from a file name
+function formatDisplayTitle(fileName) {
+    if (!fileName || typeof fileName !== 'string') return 'Untitled';
+    // Remove .md extension (case-insensitive)
+    let name = fileName.replace(/\.md$/i, '');
+    // Replace underscores with spaces, collapse multiple spaces
+    name = name.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+    // Capitalize each word
+    return name.split(' ').map(part => part ? (part[0].toUpperCase() + part.slice(1).toLowerCase()) : part).join(' ');
 }
 
