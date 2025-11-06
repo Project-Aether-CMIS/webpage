@@ -29,7 +29,8 @@ async function updateDocumentationDisplay() {
         }
     });
     sortedDocs.forEach(doc => {
-        const docItem = $('<div class="documentation_item" href="/doc_view.html?file=' + encodeURIComponent(doc.file_name) + '"></div>');
+        const docItem = $('<a class="documentation_item"></a>');
+        docItem.attr('href', 'doc_view.html?file=' + encodeURIComponent(doc.file_name));
         const displayTitle = formatDisplayTitle(doc.file_name);
         docItem.attr('data-title', displayTitle);
 
@@ -38,7 +39,7 @@ async function updateDocumentationDisplay() {
 
         const meta = $('<div class="documentation_meta"></div>');
         $('<span class="documentation_author"></span>')
-            .text(`Author: ${doc.author || 'Unknown Author'}`)
+            .text(`Author: ${formatDisplayTitle(doc.author) || 'Unknown Author'}`)
             .appendTo(meta);
         $('<span class="documentation_date"></span>')
             .text(formatDocumentDate(doc.file_date))

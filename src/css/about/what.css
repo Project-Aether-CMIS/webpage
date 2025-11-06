@@ -20,11 +20,14 @@ div.product_cards{
     gap: 20px;
     margin: 20px;
 }
-div.product_card{
+.product_card{
     display: flex;
     flex-direction: row;
     align-items: center;
     margin: 20px;
+    text-decoration: none; /* remove link underline */
+    color: inherit; /* keep text color */
+    cursor: pointer;
 }
 
 div.product_info{

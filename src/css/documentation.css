@@ -41,7 +41,7 @@ div.documentation_display{
     width: 90%;
     margin: auto;
 }
-div.documentation_item{
+.documentation_item{
     background-color: black;
     padding: 20px;
     margin: 20px;
@@ -49,9 +49,12 @@ div.documentation_item{
     transition: transform 0.2s;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 18px;
+    text-decoration: none; /* anchor styling */
+    color: inherit;        /* anchor styling */
+    display: block;        /* make anchor behave like block/card */
 }
 
-div.documentation_item:hover{
+.documentation_item:hover{
     transform: scale(1.02);
 }
 

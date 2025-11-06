@@ -18,3 +18,28 @@ div.info p {
     margin: 10px 5%;
 
 }
+
+div.content {
+    font-family: 'Avenir LT Pro', sans-serif;
+    color:white;
+    margin: 20px 5%;
+}
+
+div.content a{
+    color:grey;
+    text-decoration: none;
+    transition: text-decoration 0.3s ease;
+}
+
+div.content a:hover {
+    text-decoration: underline;
+}
+
+code {
+    font-family: monospace;
+    padding: 2px 4px;
+}
+
+blockquote {
+    font-style: italic;
+}
